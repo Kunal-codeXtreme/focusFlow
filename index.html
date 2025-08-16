@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FocusFlow - Productivity Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <!-- styles -->
+  <link rel="stylesheet" href="style.css">
+  <!-- fullcalendar -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 </head>
 <body>
+
+  <!-- main navigation -->
   <nav class="navbar">
     <div class="nav-left">FocusFlow</div>
     <div class="nav-right">
@@ -15,25 +20,84 @@
   </nav>
 
   <div class="container">
+
+    <!-- welcome panel -->
     <div class="panel welcome">
       <h2>Welcome <span id="username">Guest</span></h2>
+      <p class="welcome-subtitle">Stay focused.</p>
+      <p class="welcome-task-summary">
+        You have <span id="task-count">0</span> tasks today - 
+        <span id="completed-count">0</span> completed.
+      </p>
+      <div class="progress-row">
+        <span class="progress-label">In Progress</span>
+        <div id="welcome-status">
+          <div class="bar" id="progress-bar"></div>
+        </div>
+      </div>
     </div>
 
+    <!-- to-do list -->
     <div class="panel todo">
       <h2>To-Do List</h2>
+      <form id="add-task-form">
+        <input id="todo-input" type="text" placeholder="Add new task..." required>
+        <button type="submit">Add Task</button>
+      </form>
+      <ul id="todo-list"></ul>
     </div>
 
+    <!-- calendar -->
     <div class="panel calendar">
       <h2>Calendar</h2>
+      <div id="calendar-placeholder"></div>
     </div>
 
+    <!-- pomodoro timer -->
     <div class="panel timer">
       <h2>Pomodoro Timer</h2>
+      <div id="timer">25:00</div>
+      <div class="timer-buttons">
+        <button id="start-timer">Start</button>
+        <button id="pause-timer">Pause</button>
+        <button id="reset-timer">Reset</button>
+      </div>
     </div>
 
+    <!-- add plan form -->
     <div class="panel add-plan">
       <h2>Add Plan</h2>
+      <form id="add-plan-form">
+        <input type="text" id="plan-title" placeholder="Plan title" required>
+        <input type="date" id="plan-date" required>
+        <textarea id="plan-desc" placeholder="Plan description..."></textarea>
+        <button type="submit">Add Plan</button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- event modal -->
+  <div id="event-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 id="modal-title">Event Title</h3>
+      <p id="modal-date" class="small-date"></p>
+      <p id="modal-description">Event description...</p>
+      <button id="modal-close-btn">Close</button>
     </div>
   </div>
+
+  <!-- name entry modal -->
+  <div id="name-modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Welcome to FocusFlow</h3>
+      <p class="modal-text">Please enter your name to begin.</p>
+      <input type="text" id="name-input" placeholder="Your Name...">
+      <button id="save-name-btn">Continue</button>
+    </div>
+  </div>
+
+  <!-- scripts -->
+  <script src="script.js"></script>
 </body>
 </html>

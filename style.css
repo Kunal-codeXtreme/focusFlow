@@ -1,1 +1,387 @@
-/* do it tommorow */
+/* === Theme variables === */
+/* not sorted on purpose, for a natural feel */
+:root {
+  --text-primary: #ffffff;
+  --accent-secondary: #007bff;
+  --panel-bg-alt: #1f2633;
+  --border-color: #2c313c;
+  --primary-bg: #0f111a;
+  --success-color: #28a745;
+  --danger-color: #ff6b6b;
+  --accent-primary: #00c6ff;
+  --panel-bg: #161b22;
+  --text-secondary: #ccc;
+  --text-tertiary: #aaa;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --input-bg: #252b38;
+}
+
+/* reset-ish styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Navbar === */
+.navbar {
+  background: #141821;
+  padding: 15px 25px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.nav-left {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-primary);
+}
+
+.nav-right {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* === Layout grid === */
+.container {
+  display: grid;
+  grid-template-areas:
+    "welcome welcome calendar-form"
+    "todo calendar pomodoro";
+  grid-template-columns: 2fr 2fr 1.2fr;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* base panel styles */
+.panel {
+  background: var(--panel-bg);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+/* map the areas */
+.welcome { grid-area: welcome; }
+.todo { grid-area: todo; }
+.calendar { grid-area: calendar; }
+.timer { grid-area: pomodoro; }
+.add-plan { grid-area: calendar-form; }
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* === Welcome panel === */
+.welcome-subtitle {
+  color: var(--text-tertiary);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.welcome-task-summary {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.progress-label {
+  font-size: 0.9rem;
+  color: var(--text-tertiary);
+}
+
+#welcome-status {
+  flex: 1;
+  height: 10px;
+  border-radius: 10px;
+  background: var(--panel-bg-alt);
+  overflow: hidden;
+}
+
+#welcome-status .bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  transition: width 0.3s ease;
+}
+
+/* === To-do list === */
+#todo-list {
+  list-style: none;
+  padding-right: 10px;
+  margin-top: 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+#todo-list li {
+  background: var(--panel-bg-alt);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  transition: opacity 0.3s ease;
+}
+
+#todo-list li.completed .task-text-container {
+  text-decoration: line-through;
+  color: #777;
+}
+
+.task-text-container {
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.task-description {
+  margin-top: 4px;
+  font-size: 0.85em;
+  color: var(--text-tertiary);
+}
+
+/* custom checkbox look */
+#todo-list li input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+
+#todo-list li label {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: var(--input-bg);
+  border: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  cursor: pointer;
+  position: relative;
+  margin-top: 2px;
+}
+
+#todo-list li label::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  left: 6px;
+  top: 2px;
+  border: solid var(--text-primary);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+#todo-list li input[type="checkbox"]:checked + label {
+  background: var(--success-color);
+  border-color: var(--success-color);
+}
+
+#todo-list li input[type="checkbox"]:checked + label::after {
+  opacity: 1;
+}
+
+/* === Inputs & Buttons === */
+input, textarea, select {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: var(--panel-bg-alt);
+  border: 1px solid var(--border-color);
+  color: white;
+  border-radius: 6px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+button {
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover { opacity: 0.9; }
+
+/* button color overrides */
+.todo button { background: var(--accent-secondary); }
+.add-plan button { background: var(--accent-primary); }
+.timer button:nth-of-type(1) { background: var(--accent-secondary); }
+.timer button:nth-of-type(2) { background: #17a2b8; }
+.timer button:nth-of-type(3) { background: #8a2be2; }
+
+/* === Calendar & Timer === */
+#calendar-placeholder {
+  flex-grow: 1;
+  min-height: 0;
+}
+
+#timer {
+  font: bold 3.5rem sans-serif;
+  margin: 10px 0;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* delete btn */
+.delete-btn {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 5px;
+  color: var(--danger-color);
+  cursor: pointer;
+}
+
+.delete-btn:hover { color: var(--text-primary); }
+
+/* === Modals === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: var(--accent-primary);
+}
+
+#modal-close-btn,
+#name-modal-overlay .modal-content button {
+  background: var(--accent-secondary);
+  color: white;
+  width: auto;
+  padding: 10px 20px;
+}
+
+#modal-close-btn { float: right; }
+#name-modal-overlay .modal-content button { padding: 10px 30px; }
+
+.hidden { display: none !important; }
+
+/* === Responsive === */
+@media (max-width: 1000px) {
+  .container {
+    grid-template-areas:
+      "welcome"
+      "calendar-form"
+      "todo"
+      "calendar"
+      "pomodoro";
+    grid-template-columns: 1fr;
+  }
+  .timer-buttons { flex-direction: row; gap: 10px; }
+}
+
+/* === FullCalendar tweaks === */
+.fc .fc-toolbar.fc-header-toolbar {
+  margin: 0;
+  padding-bottom: 1em;
+}
+.fc .fc-toolbar-title {
+  font-size: 1.75em;
+  color: #e0e0e0;
+}
+.fc .fc-button {
+  background: var(--input-bg);
+  border: 1px solid #333;
+  color: #fff;
+}
+.fc .fc-button:hover {
+  background: #333a4d;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background: var(--accent-secondary);
+  border-color: var(--accent-secondary);
+}
+.fc .fc-daygrid-day.fc-day-today {
+  background: rgba(0, 123, 255, 0.15);
+}
+.fc-event {
+  background: var(--accent-secondary) !important;
+  border-color: var(--accent-secondary) !important;
+}
+
+/* === Scrollbars === */
+#todo-list::-webkit-scrollbar,
+.fc-scroller::-webkit-scrollbar {
+  width: 6px;
+}
+#todo-list::-webkit-scrollbar-thumb,
+.fc-scroller::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+#todo-list::-webkit-scrollbar-thumb:hover,
+.fc-scroller::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
